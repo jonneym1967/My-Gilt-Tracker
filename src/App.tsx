@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import { AuthProvider, useAuth } from './hooks/useAuth'
-import { Auth } from './components/Auth'
 import { Layout } from './components/Layout'
 import { Dashboard } from './components/Dashboard'
 import { ItemList } from './components/ItemList'
@@ -10,26 +8,13 @@ import { CategoryManager } from './components/CategoryManager'
 import { useGiltItems } from './hooks/useGiltItems'
 import type { GiltItem, GiltItemInsert } from './types/database'
 
-function AppContent() {
-  const { user, loading } = useAuth()
+export default function App() {
   const [currentPage, setCurrentPage] = useState('dashboard')
   const [showItemForm, setShowItemForm] = useState(false)
   const [editingItem, setEditingItem] = useState<GiltItem | null>(null)
   const [viewingItem, setViewingItem] = useState<GiltItem | null>(null)
   const [showCategoryManager, setShowCategoryManager] = useState(false)
   const { addItem, updateItem } = useGiltItems()
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="w-8 h-8 border-3 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
-      </div>
-    )
-  }
-
-  if (!user) {
-    return <Auth />
-  }
 
   const handleAddItem = () => {
     setEditingItem(null)
@@ -92,13 +77,5 @@ function AppContent() {
         <CategoryManager onClose={() => setShowCategoryManager(false)} />
       )}
     </Layout>
-  )
-}
-
-export default function App() {
-  return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
   )
 }

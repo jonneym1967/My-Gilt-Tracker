@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
-import { useAuth } from '../hooks/useAuth'
-import { LayoutDashboard, List, FolderOpen, LogOut, TrendingUp } from 'lucide-react'
+import { LayoutDashboard, List, FolderOpen, TrendingUp } from 'lucide-react'
 
 interface LayoutProps {
   children: ReactNode
@@ -9,11 +8,9 @@ interface LayoutProps {
 }
 
 export function Layout({ children, currentPage, onNavigate }: LayoutProps) {
-  const { user, signOut } = useAuth()
-
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'items', label: 'My Items', icon: List },
+    { id: 'items', label: 'Items', icon: List },
     { id: 'categories', label: 'Categories', icon: FolderOpen },
   ]
 
@@ -46,22 +43,6 @@ export function Layout({ children, currentPage, onNavigate }: LayoutProps) {
                   </button>
                 ))}
               </nav>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <div className="hidden sm:block text-right">
-                <p className="text-sm font-medium text-gray-900">
-                  {user?.email?.split('@')[0]}
-                </p>
-                <p className="text-xs text-gray-500">{user?.email}</p>
-              </div>
-              <button
-                onClick={signOut}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-gray-600"
-                title="Sign out"
-              >
-                <LogOut className="w-5 h-5" />
-              </button>
             </div>
           </div>
         </div>
